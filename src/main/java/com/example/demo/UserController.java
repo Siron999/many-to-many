@@ -21,13 +21,13 @@ public class UserController {
 
     @PostMapping("/user/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-
-        for (Role role: user.getRoles()){
-            for(Role name: roleRepository.findAll()){
-                if(role.getName().equals(name.getName())){
-                    Role roles= roleRepository.findById(name.getId()).get();
-                    user.setRoles(new ArrayList<>());
-                    user.assignRoles(roles);
+       List<Role> roles= roleRepository.findAll();
+        for( int i = 0; i < user.getRoles().size(); i++ ){
+            for( int j = 0; j < roles.size(); j++ ) {
+                if(user.getRoles().get(i).getName().equals(roles.get(j).getName())){
+                    Role role= roleRepository.findById(roles.get(j).getId()).get();
+                    user.removeRole(user.getRoles().get(i));
+                    user.assignRoles(role);
                 }
             }
         }

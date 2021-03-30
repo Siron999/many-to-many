@@ -27,6 +27,9 @@ public class User {
     public void assignRoles(Role role){
         roles.add(role);
     }
+    public void removeRole(Role role){
+        roles.remove(role);
+    }
 
 
 
